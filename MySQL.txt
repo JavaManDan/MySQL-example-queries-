@@ -1,0 +1,76 @@
+# Question_number_One 
+How many transcripts there are whose status is known. [2 marks]
+
+ SELECT COUNT(*) FROM transcript WHERE status = 'known'; 
+	
+# ========================================================================================================
+
+
+
+# Question_number_Two 
+From the gene table, find the description of the gene with id 9240 [2 marks]
+	
+	
+ SELECT gene_id,description  FROM gene WHERE gene_id ='9240';
+
+# ========================================================================================================
+
+
+
+# Question_number_Three 
+Find the combined length of all the sequences in seq_region whose primary key is smaller than 200. [3 marks]
+						   
+						   
+ SELECT  seq_region_id , SUM(length)  FROM seq_region WHERE seq_region_id < 200;    
+
+
+# ========================================================================================================
+
+
+
+
+# Question_number_Four 
+
+Find the genome sequence for the seq_region with name “contig_39273”. Hint: Use
+Describe to understand the structure of the tables “dna” and “seq_region”. [4 marks]
+
+
+ SELECT  d.sequence  FROM seq_region s , dna d WHERE name ='contig_39273' AND d.seq_region_id = s.seq_region_id;
+# ========================================================================================================
+
+
+# Question_number_Five
+
+Find the maximum end_exon_id of all entries of translation whose primary key is smaller
+than 200 and whose corresponding transcript has status “novel”. [4 marks]
+
+SELECT MAX(tr.end_exon_id) FROM translation tr , transcript ts  WHERE tr.translation_id < 200 AND ts.transcript_id = tr.transcript_id AND ts.status = 'NOVEL';
+
+
+
+# ========================================================================================================
+Question_number_six
+For the item from translation whose end_exon_id is 77777, find the corresponding gene_id
+from the table gene and the corresponding length from the table “seq_region”. [5 marks]
+
+ DELETE JUST BEFORE SUBMISSION TESTING
+ #select the translation , get its transcript_id   transcript_id = '7667'
+ SELECT * FROM translation WHERE end_exon_id = '77777';
+
+ #select all from transcript for this id
+ SELECT * FROM transcript WHERE transcript_id = '7667'; #gene id = 7636 seq_region_id = 1984089
+
+ #select * from gene where gene_id is = 7636 and get seq_region_id =1984089
+ SELECT * FROM gene WHERE gene_id = '7636';
+
+ #get the length of the sequence length = '22091'
+ SELECT * FROM seq_region WHERE seq_region_id = '1984089';
+ 
+ #	CONTAINS THE CHECKING INFO DELETE AFTER USE
+ SELECT tr.transcript_id , ts.gene_id, g.seq_region_id, s.length  FROM translation tr , transcript ts, gene g, seq_region s  WHERE end_exon_id = '77777' AND ts.transcript_id = tr.transcript_id AND g.gene_id = ts.gene_id AND s.seq_region_id = g.seq_region_id;
+
+FINAL ANSWERS DONT DELETE THESE BELOW _____....>>>>>
+
+SELECT ts.gene_id, s.length  FROM translation tr , transcript ts, gene g, seq_region s  WHERE end_exon_id = '77777' AND ts.transcript_id = tr.transcript_id AND g.gene_id = ts.gene_id AND s.seq_region_id = g.seq_region_id;
+
+
